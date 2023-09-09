@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SecondActivity">
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="370dp"
+        android:layout_height="257dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <!-- Inside text input layout add
+              an auto complete text view
+                and make its input type to none-->
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteTextView"
+            android:layout_width="235dp"
+            android:layout_height="59dp"
+            android:layout_weight="1"
+            android:inputType="none"
+            android:text="Choose Symptom" />
+
+        <RatingBar
+            android:id="@+id/newRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/autoCompleteTextView"
+            android:numStars="5"
+            android:stepSize="1" />
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Upload Symptoms"
+            app:layout_constraintTop_toBottomOf="@id/newRatingBar" />
+
+        <!-- Add a "Go Back" Button -->
+        <Button
+            android:id="@+id/goBackButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Go Back"
+            app:layout_constraintTop_toBottomOf="@id/button1" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<androidx.constraintlayout.widget.ConstraintLayout-->
+<!--    xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--    xmlns:tools="http://schemas.android.com/tools"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    tools:context=".SecondActivity">-->
+
+
+<!--    <com.google.android.material.textfield.TextInputLayout-->
+<!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"-->
+<!--        android:layout_width="370dp"-->
+<!--        android:layout_height="257dp"-->
+<!--        android:layout_marginStart="20dp"-->
+<!--        android:layout_marginTop="20dp"-->
+<!--        android:layout_marginEnd="20dp"-->
+<!--        android:layout_marginBottom="20dp"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+
+<!--        &lt;!&ndash; Inside text input layout add-->
+<!--              an auto complete text view-->
+<!--                and make its input type to none&ndash;&gt;-->
+
+<!--        <AutoCompleteTextView-->
+<!--            android:id="@+id/autoCompleteTextView"-->
+<!--            android:layout_width="235dp"-->
+<!--            android:layout_height="59dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:inputType="none"-->
+<!--            android:text="Choose Symptom" />-->
+
+<!--        <RatingBar-->
+<!--            android:id="@+id/newRatingBar"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_below="@id/autoCompleteTextView"-->
+<!--            android:numStars="5"-->
+<!--            android:stepSize="1" />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/button1"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="4dp"-->
+<!--            android:text="Upload Symptoms" />-->
+<!--        -->
+
+<!--    </com.google.android.material.textfield.TextInputLayout>-->
+<!--    -->
+<!--</androidx.constraintlayout.widget.ConstraintLayout>-->
