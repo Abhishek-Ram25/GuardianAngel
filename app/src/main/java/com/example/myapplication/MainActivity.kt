@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var heartRateVal: MutableLiveData<String>
     private var heartMeasure:String=""
     private val maxRecordsToRead = 1280
-    private var accel_val:Float=0.0f
+    private var accel_val:Int=0
     private val filePicker: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
                     ?: 0
             var aduration = duration!!.toInt()
             var i = 10
-            while (i < 20) {
+            while (i < 100) {
                 val bitmap = retriever.getFrameAtIndex(i)
                 frameList.add(bitmap!!)
                 i += 5
@@ -119,7 +119,7 @@ class MainActivity : AppCompatActivity() {
             Log.d("Answer:", temp)
             var tvBloodRate = findViewById<TextView>(R.id.textView)
             tvBloodRate.text = "Your heartbeat is = $temp"
-            //heartRateVal.postValue(result);
+            heartRateVal.postValue(temp);
             return temp.toString()
 
         }
@@ -133,7 +133,7 @@ class MainActivity : AppCompatActivity() {
         heartRateVal.observe(this) { result ->
 
             heartMeasure = result
-            Log.d("shek", "heartbeeat")
+            Log.d("shek", "heartbeat")
 
         }
 
@@ -141,6 +141,8 @@ class MainActivity : AppCompatActivity() {
         // adding on click listener for our button on below line.
         showSymptomsBtn.setOnClickListener {
             val intent = Intent(this,SecondActivity::class.java)
+            intent.putExtra("Heart_val",heartMeasure)
+            intent.putExtra("Resp_val",accel_val)
             startActivity(intent)
     }
 
@@ -168,7 +170,7 @@ class MainActivity : AppCompatActivity() {
         inputStream: InputStream?,
         columnIndex: Int,
         maxRecords: Int
-    ): Float {
+    ): Int {
         val reader = BufferedReader(InputStreamReader(inputStream))
         var line: String? =""
         val columnData = StringBuilder()
@@ -206,7 +208,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        return ret.toFloat()
+        return (30*ret).toInt()
     }
 
 }

@@ -6,19 +6,19 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MedicalDataViewModal(application: Application): AndroidViewModel(application) {
+class UserDataViewModal(application: Application): AndroidViewModel(application) {
 
-    private val readAllData: LiveData<List<MedicalData>>
+    private val readAllData: LiveData<List<UserData>>
 
-    private val repository: MedicalDataRepository
+    private val repository: UserDataRepository
 
     init {
-        val keyValueStoreDao = MedicalDataDatabase.getDatabase(application).dataDao()
-        repository = MedicalDataRepository(keyValueStoreDao)
+        val keyValueStoreDao = UserDataDB.getDatabase(application).dataDao()
+        repository = UserDataRepository(keyValueStoreDao)
         readAllData = repository.readAllData
     }
 
-    fun insert(data: MedicalData){
+    fun insert(data: UserData){
         viewModelScope.launch(Dispatchers.IO){
             repository.insert(data)
         }
