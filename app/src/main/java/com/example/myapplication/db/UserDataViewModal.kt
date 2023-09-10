@@ -1,8 +1,11 @@
-package com.example.myapplication
+package com.example.myapplication.db
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
+import com.example.myapplication.db.UserData
+import com.example.myapplication.db.UserDataDB
+import com.example.myapplication.db.UserDataRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

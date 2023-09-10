@@ -7,6 +7,9 @@ import android.os.Bundle
 import android.content.SharedPreferences
 import android.widget.*
 import androidx.lifecycle.ViewModelProvider
+import com.example.myapplication.db.SymptomEntity
+import com.example.myapplication.db.UserData
+import com.example.myapplication.db.UserDataViewModal
 
 class SecondActivity : AppCompatActivity() {
 

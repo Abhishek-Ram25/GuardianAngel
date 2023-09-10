@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.db
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
@@ -12,7 +12,7 @@ abstract class UserDataDB: RoomDatabase() {
         @Volatile
         private var INSTANCE: UserDataDB? = null
 
-        fun getDatabase(context: Context): UserDataDB{
+        fun getDatabase(context: Context): UserDataDB {
             val tempInstance = INSTANCE
             if(tempInstance != null){
                 return tempInstance
