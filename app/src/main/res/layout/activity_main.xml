@@ -79,7 +79,7 @@
         android:layout_width="386dp"
         android:layout_height="32dp"
         android:layout_marginTop="308dp"
-        android:text="Heart Beat"
+        android:text="Heart Beat Rate"
         android:textSize="18sp"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"

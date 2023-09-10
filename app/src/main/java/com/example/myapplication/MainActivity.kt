@@ -11,7 +11,6 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.MutableLiveData
@@ -22,7 +21,6 @@ import java.io.InputStream
 import java.io.InputStreamReader
 import kotlin.math.pow
 import kotlin.math.abs
-import kotlin.math.pow
 import kotlin.math.sqrt
 
 
@@ -30,35 +28,39 @@ class MainActivity : AppCompatActivity() {
     lateinit var heartRateVal: MutableLiveData<String>
     private var heartMeasure:String=""
     private val maxRecordsToRead = 1280
-    private var accel_val:Int=0
-    private val filePicker: ActivityResultLauncher<Intent> =
+    private var accelerometerVal:Int=0
+    private val selectCSVFile: ActivityResultLauncher<Intent> =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 var acc_val: TextView =findViewById(R.id.acc_val)
                 val data: Intent? = result.data
                 data?.data?.let { uri ->
                     val inputStream: InputStream? = contentResolver.openInputStream(uri)
-                    accel_val = readColumnData(
+                    accelerometerVal = readColumnData(
                         inputStream,
                         0,
                         maxRecordsToRead
                     ) // 0 represents the first column
-                    Log.d("Col Data", accel_val.toString())
-                    acc_val.text=accel_val.toString();
+                    Log.d("Col Data", accelerometerVal.toString())
+                    acc_val.text=accelerometerVal.toString();
 
                 }
             }
         }
     private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-        Log.d("URI", uri.toString())
-        GlobalScope.launch {
-            val result = processVideoFrames(uri)
+      if(uri!=null)
+      {
+          Log.d("URI", uri.toString())
+          GlobalScope.launch {
+              val result = parseVideo(uri)
 
-            Log.d("final",result);
-        }
+              Log.d("final",result);
+
+          }
+      }
     }
 
-    private suspend fun processVideoFrames(videoUri: Uri?): String {
+    private suspend fun parseVideo(videoUri: Uri?): String {
 
         val retriever = MediaMetadataRetriever()
         var frameList = ArrayList<Bitmap>()
@@ -71,7 +73,7 @@ class MainActivity : AppCompatActivity() {
                     ?: 0
             var aduration = duration!!.toInt()
             var i = 10
-            while (i < 100) {
+            while (i < aduration) {
                 val bitmap = retriever.getFrameAtIndex(i)
                 frameList.add(bitmap!!)
                 i += 5
@@ -109,7 +111,7 @@ class MainActivity : AppCompatActivity() {
                 var p = b.elementAt(i.toInt())
                 val dif = p - x;
                 Log.d("Diff", dif.toString())
-                if ((p - x) > 1000) {
+                if ((p - x) > 650) {
                     count = count + 1
                 }
                 x = b.elementAt(i.toInt())
@@ -142,9 +144,18 @@ class MainActivity : AppCompatActivity() {
         showSymptomsBtn.setOnClickListener {
             val intent = Intent(this,SecondActivity::class.java)
             intent.putExtra("Heart_val",heartMeasure)
-            intent.putExtra("Resp_val",accel_val)
+            intent.putExtra("Resp_val",accelerometerVal)
             startActivity(intent)
     }
+
+        var uploadBtn: Button = findViewById(R.id.upload)
+        // adding on click listener for our button on below line.
+        uploadBtn.setOnClickListener {
+            val intent = Intent(this,SecondActivity::class.java)
+            intent.putExtra("Heart_val",heartMeasure)
+            intent.putExtra("Resp_val",accelerometerVal)
+            startActivity(intent)
+        }
 
         val heart = findViewById<Button>(R.id.heartRate)
         heart.setOnClickListener {
@@ -156,14 +167,14 @@ class MainActivity : AppCompatActivity() {
         }
         val acc = findViewById<Button>(R.id.respiratoryRate)
         acc.setOnClickListener {
-            openFilePicker()
+            fileSelector()
         }
 
 }
-    private fun openFilePicker() {
+    private fun fileSelector() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "*/*" // Specify the MIME type for CSV files
-        filePicker.launch(intent)
+        selectCSVFile.launch(intent)
     }
 
     private fun readColumnData(
