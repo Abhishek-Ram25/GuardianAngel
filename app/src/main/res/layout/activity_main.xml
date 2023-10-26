@@ -94,5 +94,14 @@
         android:orientation="vertical"
         app:layout_constraintGuide_begin="-3dp" />
 
+    <Button
+        android:id="@+id/Traffic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="Traffic Data"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

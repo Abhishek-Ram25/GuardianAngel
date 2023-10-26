@@ -25,6 +25,7 @@ import kotlin.math.sqrt
 
 
 class MainActivity : AppCompatActivity() {
+
     lateinit var heartRateVal: MutableLiveData<String>
     private var heartMeasure:String=""
     private val maxRecordsToRead = 1280
@@ -139,6 +140,7 @@ class MainActivity : AppCompatActivity() {
 
         }
 
+
         var showSymptomsBtn: Button = findViewById(R.id.symptoms)
         // adding on click listener for our button on below line.
         showSymptomsBtn.setOnClickListener {
@@ -157,6 +159,14 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        var trafficDataBtn: Button = findViewById(R.id.Traffic)
+        // adding on click listener for our button on below line.
+        trafficDataBtn.setOnClickListener {
+            val intent = Intent(this,TrafficDataActivity::class.java)
+            startActivity(intent)
+        }
+
+
         val heart = findViewById<Button>(R.id.heartRate)
         heart.setOnClickListener {
 //            val intent = Intent(Intent.ACTION_GET_CONTENT)
@@ -170,7 +180,11 @@ class MainActivity : AppCompatActivity() {
             fileSelector()
         }
 
+
+
 }
+
+
     private fun fileSelector() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "*/*" // Specify the MIME type for CSV files
@@ -221,5 +235,8 @@ class MainActivity : AppCompatActivity() {
 
         return (30*ret).toInt()
     }
+
+
+
 
 }

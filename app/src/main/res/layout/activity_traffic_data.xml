@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TrafficDataActivity">
+
+    <!-- Source Latitude and Longitude -->
+    <EditText
+        android:id="@+id/sourceLatitude"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Source Latitude"
+        android:inputType="numberDecimal|numberSigned"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/sourceLongitude"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/targetLatitude" />
+
+    <EditText
+        android:id="@+id/sourceLongitude"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Source Longitude"
+        android:inputType="numberDecimal|numberSigned"
+        app:layout_constraintStart_toEndOf="@+id/sourceLatitude"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/targetLongitude" />
+
+    <!-- Target Latitude and Longitude -->
+    <EditText
+        android:id="@+id/targetLatitude"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Target Latitude"
+        android:inputType="numberDecimal|numberSigned"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/targetLongitude"
+        app:layout_constraintTop_toBottomOf="@+id/sourceLatitude"
+        app:layout_constraintBottom_toTopOf="@+id/submitButton" />
+
+    <EditText
+        android:id="@+id/targetLongitude"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Target Longitude"
+        android:inputType="numberDecimal|numberSigned"
+        app:layout_constraintStart_toEndOf="@+id/targetLatitude"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sourceLongitude"
+        app:layout_constraintBottom_toTopOf="@+id/submitButton" />
+
+    <!-- Submit Button -->
+
+    <Button
+        android:id="@+id/submitButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/resultTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Distance Matrix API Response"
+        app:layout_constraintTop_toBottomOf="@+id/submitButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
