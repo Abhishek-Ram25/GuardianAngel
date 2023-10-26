@@ -1,17 +1,17 @@
-package com.example.myapplication
-import androidx.lifecycle.MutableLiveData
+package com.example.myapplication.db
+
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "healthApp_data")
-data class MedicalData (
+data class UserData(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     val nausea_rating: Float,
     val headache_rating: Float,
     val diarrhea_rating: Float,
     val sore_throat_rating: Float,
-    val fever_rating:Float,
+    val fever_rating: Float,
     val muscle_ache_rating: Float,
     val smell_loss_rating: Float,
     val cough_rating: Float,
