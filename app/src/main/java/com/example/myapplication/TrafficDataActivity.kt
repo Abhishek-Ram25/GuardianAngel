@@ -12,6 +12,9 @@ import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
+import org.json.JSONException
+import org.json.JSONObject
+import kotlin.math.abs
 
 
 class TrafficDataActivity : AppCompatActivity() {
@@ -35,14 +38,23 @@ class TrafficDataActivity : AppCompatActivity() {
 
         val submitButton = findViewById<Button>(R.id.submitButton)
         submitButton.setOnClickListener {
-            val apiUrl =
-                "https://maps.googleapis.com/maps/api/distancematrix/json?origins=${sourceLatitude.text},${sourceLongitude.text}&destinations=${targetLatitude.text},${targetLongitude.text}&key=$apiKey"
+            val apiUrl = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=${sourceLatitude.text},${sourceLongitude.text}&destinations=${targetLatitude.text},${targetLongitude.text}&departure_time=now&key=$apiKey"
+
             Log.d("URL",apiUrl)
-                GlobalScope.launch {
+            GlobalScope.launch {
                 val response = makeApiCall(apiUrl)
                 // Parse and display the response (You can use a JSON parser)
                 withContext(Dispatchers.Main) {
-                    resultTextView.text = response
+                    val (distance, duration, durationInTraffic) = parseApiResponse(response)
+//                    val distanceNumeric = parseDistance(distance)
+//                    val durationNumeric = parseDuration(duration)
+//                    val durationInTrafficNumeric = parseDuration(durationInTraffic)
+
+                    val s1 = calculateSpeed(distance, duration)
+                    val s2 = calculateSpeed(distance, durationInTraffic)
+                    val speedDifference = abs(s1 - s2)
+                   // resultTextView.text = "Distance: $distance\nDuration: $duration\nDuration in Traffic: $durationInTraffic"
+                    resultTextView.text = "Distance: $distance m\nDuration: $duration s\nDuration in Traffic: $durationInTraffic s\nSpeed s1: $s1 m/s\nSpeed s2: $s2 m/s\nDifference in speeds : $speedDifference m/s"
                 }
             }
         }
@@ -68,4 +80,45 @@ class TrafficDataActivity : AppCompatActivity() {
             return "API request failed: ${e.message}"
         }
     }
+
+    private fun parseApiResponse(apiResponse: String): Triple<Double, Double, Double> {
+        try {
+            val jsonResponse = JSONObject(apiResponse)
+            val status = jsonResponse.optString("status")
+
+            if (status == "OK") {
+                val rows = jsonResponse.getJSONArray("rows")
+                if (rows.length() > 0) {
+                    val elements = rows.getJSONObject(0).getJSONArray("elements")
+                    if (elements.length() > 0) {
+                        val distance = elements.getJSONObject(0).getJSONObject("distance").getDouble("value")
+                        val duration = elements.getJSONObject(0).getJSONObject("duration").getDouble("value")
+                        val durationInTraffic = elements.getJSONObject(0).getJSONObject("duration_in_traffic").getDouble("value")
+                        return Triple(distance, duration, durationInTraffic)
+                    }
+                }
+            }
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
+        return Triple(0.0, 0.0, 0.0)
+    }
+    private fun parseDistance(distanceText: String): Double {
+        // Assuming the distance text is in "meters" (e.g., "1234 m")
+        return distanceText.split(" ")[0].toDouble()
+    }
+
+    private fun parseDuration(durationText: String): Double {
+        // Assuming the duration text is in "seconds" (e.g., "567 s")
+        return durationText.split(" ")[0].toDouble()/60
+    }
+
+    private fun calculateSpeed(distance: Double, duration: Double): Double {
+        // Calculate speed in m/s
+        return distance / duration
+    }
+
+
+
 }
+
