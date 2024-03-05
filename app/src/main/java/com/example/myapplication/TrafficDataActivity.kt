@@ -34,7 +34,7 @@ class TrafficDataActivity : AppCompatActivity() {
         targetLongitude = findViewById(R.id.targetLongitude)
         resultTextView = findViewById(R.id.resultTextView)
 
-        val apiKey = "AIzaSyDjn-lkhaukMFgpC9A87cbZnx2zTc1utlY" // Replace with your Google API key
+        val apiKey = "GoogleApiKEY" // Replace with your Google API key
 
         val submitButton = findViewById<Button>(R.id.submitButton)
         submitButton.setOnClickListener {
